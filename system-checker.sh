@@ -8,12 +8,6 @@ afficher_aide() {
     echo "Usage: $0 [OPTIONS]"
     echo ""
     echo "Ce script détecte le système d'exploitation et affiche son nom et sa version."
-    echo "Options :"
-    echo "  -h, --help   Affiche ce message d'aide"
-    echo "  -s, --system Retourne uniquement le nom du système d'exploitation (pour utilisation dans d'autres scripts)."
-    echo ""
-    echo "Exemple :"
-    echo "  ./system-checker.sh"
 }
 
 # Gestion des options
