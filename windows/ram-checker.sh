@@ -17,8 +17,8 @@
 # -----------------------------
 
 # Informations générales
-echo "-------------------------------"
-echo "-- INFORMATIONS SUR LA RAM -- :"
+echo "-----------------------------"
+echo "-- INFORMATIONS SUR LA RAM --"
 echo "RAM totale : $(wmic ComputerSystem get TotalPhysicalMemory | awk 'NR==2{print $1/1e9" Go"}')"
 echo "RAM utilisée : $(wmic OS get FreePhysicalMemory | awk 'NR==2{print $1/1e6" Go"}')"
 echo "RAM disponible : $(wmic OS get FreePhysicalMemory | awk 'NR==2{print $1/1e6" Go"}')"
@@ -27,4 +27,3 @@ echo "Capacity : $(wmic MemoryChip get Capacity | awk 'NR==2{print $1" o"}')"
 echo "MemoryType : $(wmic MemoryChip get MemoryType | awk 'NR==2{print $1" (DDR4)"}')"
 echo "Speed : $(wmic MemoryChip get Speed | awk 'NR==2{print $1" mhz"}')"
 echo "TypeDetail : $(wmic MemoryChip get TypeDetail | awk 'NR==2{print $1" (Synchronous)"}')"
-echo "-------------------------------"

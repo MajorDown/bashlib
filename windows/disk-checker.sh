@@ -44,5 +44,4 @@ Get-PhysicalDisk | ForEach-Object {
     Write-Host \"État de santé : \$(\$disk.HealthStatus)\"
     Write-Host \"État opérationnel : \$(\$disk.OperationalStatus)\"
     Write-Host \"Firmware : \$(\$disk.FirmwareVersion)\"
-    Write-Host \"----------------------------------\"
 }"
