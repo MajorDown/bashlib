@@ -13,12 +13,15 @@ OS=$(uname)
 case "$OS" in
     Darwin)
         SYSTEM_NAME="mac"
+        SYSTEM_VERSION=$(sw_vers -productVersion)
         ;;
     Linux)
         SYSTEM_NAME="linux"
+        SYSTEM_VERSION=$(lsb_release -d 2>/dev/null | awk -F':' '{print $2}' | xargs || uname -r)
         ;;
     CYGWIN*|MINGW*|MSYS*)
         SYSTEM_NAME="windows"
+        SYSTEM_VERSION=$(powershell.exe -Command "(Get-CimInstance Win32_OperatingSystem).Caption" | xargs)
         ;;
     *)
         echo "Système d'exploitation non pris en charge."
@@ -27,12 +30,14 @@ case "$OS" in
 esac
 
 echo "Système détecté : $SYSTEM_NAME"
+echo "version : $SYSTEM_VERSION"
 
 # Chemin vers les scripts en fonction du système
 SCRIPT_DIR="./$SYSTEM_NAME"
 
 # Liste des scripts à exécuter
 SCRIPTS=(
+    "pc-checker.sh"
     "cpu-checker.sh"
     "disk-checker.sh"
     "ram-checker.sh"
