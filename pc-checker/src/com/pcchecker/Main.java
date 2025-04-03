@@ -14,9 +14,9 @@ public class Main {
         System.out.println("------------------");
         System.out.println("--- PC-CHECKER ---");
         System.out.println("------------------");
-        int index = 1;
+        int index = 0;
         for (ComponentType type : ComponentType.values()) {
-            System.out.println(index + " - " + type.getLabel());
+            System.out.println(index++ + " - " + type.getLabel());
         }
 
         System.out.print("Choisissez un composant à diagnostiquer : ");
