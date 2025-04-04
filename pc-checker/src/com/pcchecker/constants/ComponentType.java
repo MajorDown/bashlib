@@ -4,7 +4,9 @@ public enum ComponentType {
     ALL("Tous les composants"),
     CPU("Processeur"),
     RAM("Mémoire vive (RAM)"),
-    STORAGE("Stockage (HDD / SSD / NVMe)");
+    STORAGE("Stockage (HDD / SSD / NVMe)"),
+    OS("Système d'exploitation"),
+    GPU("Carte graphique");
 
     private final String label;
 

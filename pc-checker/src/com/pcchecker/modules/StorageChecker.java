@@ -20,57 +20,56 @@ public class StorageChecker {
         HardwareAbstractionLayer hal = si.getHardware();
         FileSystem fs = os.getFileSystem();
 
-        System.out.println("-----------------------------------------------------");
-        System.out.println("--- Diagnostic du Stockage (Disques / Partitions) ---");
+        System.out.println("-------------------------------");
+        System.out.println("----- ANALYSE DU STOCKAGE -----");
+        System.out.println("-------------------------------");
+
+        // Appel direct à la commande PowerShell (avec affichage intégré)
+        Map<String, String> diskTypes = PhysicalDiskInspector.getDiskTypesFromSystem();
+
+        // Disques physiques (via OSHI)
+        List<HWDiskStore> diskStores = hal.getDiskStores();
+        if (!diskStores.isEmpty()) {
+            System.out.println("----------------------");
+            System.out.println("--> Analyse via OSHI :");
+            for (HWDiskStore disk : diskStores) {
+                System.out.println("Modele : " + disk.getModel());
+                System.out.printf("Taille : %.2f Go%n", disk.getSize() / 1e9);
+                System.out.println("Partitions : " + disk.getPartitions().size());
+                String estimated = DiskUtils.guessDriveType(disk);
+                System.out.println("Type estime via heuristique : " + estimated + " " + getEmoji(estimated));
+            }
+        } else {
+            System.out.println("Aucun disque detecte via OSHI.");
+        }
 
         // Volumes montés
         List<OSFileStore> fileStores = fs.getFileStores();
+        System.out.println("-------------------------");
         if (!fileStores.isEmpty()) {
-            System.out.println("\n>>> Volumes montés détectés :");
+            System.out.println("--> Partitions détectes :");
             for (OSFileStore store : fileStores) {
-                System.out.println("--------------------------------------------------");
-                System.out.println("Nom : " + store.getName());
+                System.out.println("> Nom : " + store.getName());
                 System.out.println("Volume : " + store.getVolume());
                 System.out.println("Description : " + store.getDescription());
-                System.out.println("Monté sur : " + store.getMount());
-                System.out.printf("Capacité totale : %.2f Go%n", store.getTotalSpace() / 1e9);
-                System.out.printf("Espace utilisé : %.2f Go%n", (store.getTotalSpace() - store.getUsableSpace()) / 1e9);
+                System.out.println("Monte sur : " + store.getMount());
+                System.out.printf("Capacite totale : %.2f Go%n", store.getTotalSpace() / 1e9);
+                System.out.printf("Espace utilise : %.2f Go%n", (store.getTotalSpace() - store.getUsableSpace()) / 1e9);
                 System.out.printf("Espace libre : %.2f Go%n", store.getUsableSpace() / 1e9);
             }
         } else {
-            System.out.println("Aucun volume monté détecté.");
+            System.out.println("Aucune partition detecte.");
         }
+    }
 
-        // Disques physiques
-        List<HWDiskStore> diskStores = hal.getDiskStores();
-        if (!diskStores.isEmpty()) {
-            System.out.println("\n>>> Disques physiques détectés :");
-
-            Map<String, String> diskTypes = PhysicalDiskInspector.getDiskTypesFromSystem();
-
-            for (HWDiskStore disk : diskStores) {
-                System.out.println("--------------------------------------------------");
-                System.out.println("Nom du disque : " + disk.getName());
-                System.out.println("Modèle : " + disk.getModel());
-                System.out.printf("Taille : %.2f Go%n", disk.getSize() / 1e9);
-                System.out.println("Nombre de partitions : " + disk.getPartitions().size());
-                System.out.println("Temps d'activité : " + disk.getTransferTime() + " ms");
-
-                String model = disk.getModel().toLowerCase();
-                String detectedType = diskTypes.entrySet().stream()
-                        .filter(e -> model.contains(e.getKey()))
-                        .map(Map.Entry::getValue)
-                        .findFirst()
-                        .orElse(null);
-
-                if (detectedType != null) {
-                    System.out.println("Type réel détecté (WMI) : " + detectedType);
-                } else {
-                    System.out.println("Type estimé (heuristique) : " + DiskUtils.guessDriveType(disk));
-                }
-            }
-        } else {
-            System.out.println("Aucun disque physique détecté.");
-        }
+    private static String getEmoji(String type) {
+        type = type.toLowerCase();
+        if (type.contains("nvme"))
+            return "🧠";
+        if (type.contains("ssd"))
+            return "⚡";
+        if (type.contains("hdd"))
+            return "💾";
+        return "❓";
     }
 }
