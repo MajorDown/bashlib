@@ -3,6 +3,7 @@ package com.pcchecker;
 import com.pcchecker.constants.ComponentType;
 import com.pcchecker.modules.CpuChecker;
 import com.pcchecker.modules.GPUChecker;
+import com.pcchecker.modules.NetworkChecker;
 import com.pcchecker.modules.OSChecker;
 import com.pcchecker.modules.RamChecker;
 import com.pcchecker.modules.StorageChecker;
@@ -21,7 +22,7 @@ public class Main {
             System.out.println(index++ + " - " + type.getLabel());
         }
 
-        System.out.print("Choisissez un composant à diagnostiquer : ");
+        System.out.print("Choisissez un composant a diagnostiquer : ");
         int choice = scanner.nextInt();
 
         if (choice == 0) {
@@ -29,7 +30,7 @@ public class Main {
             CpuChecker.run();
             RamChecker.run();
             StorageChecker.run();
-            System.out.println("Tous les diagnostics ont été effectués.");
+            System.out.println("Tous les diagnostics ont ete effectues.");
         } else if (choice == 1) {
             CpuChecker.run();
         } else if (choice == 2) {
@@ -40,6 +41,8 @@ public class Main {
             OSChecker.run();
         } else if (choice == 5) {
             GPUChecker.run();
+        } else if (choice == 6) {
+            NetworkChecker.run();
         } else {
             System.out.println(
                     "Choix invalide. Veuillez choisir un nombre entre 0 et " + (ComponentType.values().length));

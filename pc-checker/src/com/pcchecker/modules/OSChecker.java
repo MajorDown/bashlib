@@ -11,7 +11,7 @@ public class OSChecker {
 
         System.out.println("---------------------------------------------");
         System.out.println("----- Analyse du Systeme d'exploitation -----");
-
+        System.out.println("---------------------------------------------");
         System.out.println("Nom : " + os.toString());
         System.out.println("Version : " + os.getVersionInfo().getVersion());
         System.out.println("Fabricant : " + os.getManufacturer());

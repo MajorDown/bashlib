@@ -6,7 +6,8 @@ public enum ComponentType {
     RAM("Mémoire vive (RAM)"),
     STORAGE("Stockage (HDD / SSD / NVMe)"),
     OS("Système d'exploitation"),
-    GPU("Carte graphique");
+    GPU("Carte graphique"),
+    NETWORK("Carte réseau");
 
     private final String label;
 

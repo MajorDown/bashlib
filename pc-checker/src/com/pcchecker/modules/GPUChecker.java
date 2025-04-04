@@ -16,6 +16,7 @@ public class GPUChecker {
 
         System.out.println("-----------------------------------------");
         System.out.println("----- Analyse des Cartes Graphiques -----");
+        System.out.println("-----------------------------------------");
 
         if (gpus.isEmpty()) {
             System.out.println("Aucune carte graphique detectee.");
